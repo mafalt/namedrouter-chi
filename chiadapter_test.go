@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/mafalt/namedrouter"
 	chiadapter "github.com/mafalt/namedrouter-chi"
 )
@@ -64,6 +65,58 @@ func TestChiAdapter_JoinPath(t *testing.T) {
 	if got := adapter.JoinPath("/api", "/v1"); got != "/api/v1" {
 		t.Fatalf("Expected /api/v1, got %s", got)
 	}
+}
+
+func TestChiAdapter_URLParam(t *testing.T) {
+	adapter := chiadapter.New()
+
+	t.Run("nil request returns empty string", func(t *testing.T) {
+		if got := adapter.URLParam(nil, "id"); got != "" {
+			t.Fatalf("Expected empty string from nil request, got %q", got)
+		}
+	})
+
+	t.Run("empty key returns empty string", func(t *testing.T) {
+		if got := adapter.URLParam(httptest.NewRequest(http.MethodGet, "/users/42", nil), ""); got != "" {
+			t.Fatalf("Expected empty string for empty key, got %q", got)
+		}
+	})
+
+	t.Run("returns matched route parameter", func(t *testing.T) {
+		router := chi.NewRouter()
+		router.Get("/users/{id}", func(w http.ResponseWriter, r *http.Request) {
+			if got := adapter.URLParam(r, "id"); got != "42" {
+				t.Fatalf("Expected route param id to be 42, got %q", got)
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		req := httptest.NewRequest(http.MethodGet, "/users/42", nil)
+		w := httptest.NewRecorder()
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusOK {
+			t.Fatalf("Expected status 200, got %d", w.Code)
+		}
+	})
+
+	t.Run("missing key returns empty string", func(t *testing.T) {
+		router := chi.NewRouter()
+		router.Get("/users/{id}", func(w http.ResponseWriter, r *http.Request) {
+			if got := adapter.URLParam(r, "missing"); got != "" {
+				t.Fatalf("Expected missing key to return empty string, got %q", got)
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		req := httptest.NewRequest(http.MethodGet, "/users/42", nil)
+		w := httptest.NewRecorder()
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusOK {
+			t.Fatalf("Expected status 200, got %d", w.Code)
+		}
+	})
 }
 
 func TestChiAdapter_ApplyMiddlewares(t *testing.T) {
