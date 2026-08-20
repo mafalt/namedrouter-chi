@@ -131,3 +131,11 @@ func (c *chiAdapter) ParameterParser() namedrouter.ParameterParser {
 func (c *chiAdapter) ParameterApplier() namedrouter.ParameterApplier {
 	return c.applier
 }
+
+// URLParam retrieves the value of a URL parameter from the request using the Chi router.
+func (c *chiAdapter) URLParam(r *http.Request, key string) string {
+	if r == nil || key == "" {
+		return ""
+	}
+	return chi.URLParam(r, key)
+}

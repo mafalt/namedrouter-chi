@@ -80,6 +80,22 @@ url := router.MustURL(
 Parameter values are URL path escaped before being inserted into the
 generated URL.
 
+`NamedRouter` provides framework-independent access to URL parameters through URLParam:
+
+```go
+id := router.URLParam(r, "id")
+```
+
+The actual URL parameter lookup is delegated to the configured router adapter, so application code does not need to depend on the underlying routing framework.
+
+For example, the Chi adapter uses Chi's URL parameter mechanism internally:
+
+```go
+func (a *Adapter) URLParam(r *http.Request, key string) string {
+	return chi.URLParam(r, key)
+}
+```
+
 ## Middleware
 
 `NamedRouter` middleware is translated to the corresponding Chi middleware

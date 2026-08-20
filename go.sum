@@ -1,4 +1,8 @@
 github.com/go-chi/chi/v5 v5.3.1 h1:3j4HZLGZQ3JpMCrPJF/Jl3mYJfWLKBfNJ6quurUGCf8=
 github.com/go-chi/chi/v5 v5.3.1/go.mod h1:R+tYY2hNuVUUjxoPtqUdgBqevM9s9njzkTLutVsOCto=
+github.com/go-chi/chi/v5 v5.3.2 h1:5YQkICvTCSZ25hoRsyJazN0scjzKGiu4VAUc7H1o1nY=
+github.com/go-chi/chi/v5 v5.3.2/go.mod h1:R+tYY2hNuVUUjxoPtqUdgBqevM9s9njzkTLutVsOCto=
 github.com/mafalt/namedrouter v0.0.0-20260819121547-77aae87a6dc4 h1:9fumG6mO3pF8ynUnv2npNjppQlAVr/QUWhkQM8bWlzU=
 github.com/mafalt/namedrouter v0.0.0-20260819121547-77aae87a6dc4/go.mod h1:J5vvILDcxlxoriW3ZHVowpZwpXS7W6QxwchwVsf63Gg=
+github.com/mafalt/namedrouter v0.0.0-20260820120651-94a416a4d6e1 h1:+CGZ0q8PbF/IHm8ZX4fAwYP2RhO1zzDpWBIvgOMoVWA=
+github.com/mafalt/namedrouter v0.0.0-20260820120651-94a416a4d6e1/go.mod h1:J5vvILDcxlxoriW3ZHVowpZwpXS7W6QxwchwVsf63Gg=
